@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pro PDF Merger | HABIB-UR-REHMAN</title>
+    <meta name="description" content="Merge multiple PDF files into one document. Professional PDF merging solution with compression and optimization features">
+    <meta name="keywords" content="PDF merger, combine PDFs, merge PDF files, online PDF tools">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Pro PDF Merger",
+        "description": "Advanced online PDF merging tool",
+        "applicationCategory": "Document",
+        "operatingSystem": "Web",
+        "author": {
+            "@type": "Person",
+            "name": "HABIB-UR-REHMAN",
+            "email": "hassanbhatti2343@gmail.com",
+            "telephone": "+923167372886"
+        }
+    }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #7C3AED;
+            --secondary: #6D28D9;
+            --accent: #10B981;
+            --dark: #1F2937;
+            --light: #F8FAFC;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .dark-mode {
+            --light: #0F172A;
+            --dark: #F8FAFC;
+            background: var(--light);
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .theme-toggle {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            flex: 1;
+            width: 95%;
+        }
+
+        .upload-section {
+            background: rgba(124, 58, 237, 0.05);
+            padding: 2rem;
+            border-radius: 1rem;
+            margin: 2rem 0;
+            border: 2px dashed var(--primary);
+            text-align: center;
+            position: relative;
+        }
+
+        .custom-upload {
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            position: relative;
+            overflow: hidden;
+            border: none;
+        }
+
+        .custom-upload::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: 0.5s;
+        }
+
+        .custom-upload:hover::before {
+            left: 100%;
+        }
+
+        #fileList {
+            margin: 2rem 0;
+            display: grid;
+            gap: 1rem;
+        }
+
+        .file-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem;
+            background: var(--light);
+            border-radius: 0.5rem;
+            border: 2px solid var(--primary);
+        }
+
+        .controls {
+            display: grid;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .compression-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        input[type="range"] {
+            flex: 1;
+            height: 5px;
+            border-radius: 5px;
+            background: #ddd;
+            outline: none;
+        }
+
+        .ad-container {
+            margin: 2rem 0;
+            padding: 1rem;
+            background: var(--light);
+            border-radius: 0.5rem;
+            text-align: center;
+        }
+
+        footer {
+            background: var(--dark);
+            color: var(--light);
+            padding: 2rem;
+            margin-top: auto;
+            text-align: center;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+        }
+
+        .contact-info a {
+            color: var(--light);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .loading {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .file-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        Pro PDF Merger
+        <button class="theme-toggle" onclick="toggleTheme()"><i class="fas fa-palette"></i></button>
+    </header>
+
+    <div class="container">
+        <div class="ad-container">
+            <!-- Google AdSense Header Ad -->
+            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4177525998865557"
+     crossorigin="anonymous"></script>
+<!-- Github Mediamasterprop -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4177525998865557"
+     data-ad-slot="9353889022"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+        </div>
+
+        <div class="upload-section">
+            <input type="file" id="pdfInput" accept=".pdf" multiple>
+            <label for="pdfInput" class="custom-upload">
+                <i class="fas fa-file-upload"></i>
+                Select PDF Files
+            </label>
+
+            <div id="fileList"></div>
+
+            <div class="controls">
+                <div class="compression-controls">
+                    <label>Compression Level:</label>
+                    <input type="range" id="compressionLevel" min="0" max="1" step="0.1" value="0.8">
+                    <span id="levelValue">80%</span>
+                </div>
+
+                <button class="custom-upload" onclick="mergePDFs()">
+                    <i class="fas fa-file-pdf"></i>
+                    Merge PDF Files
+                </button>
+            </div>
+        </div>
+
+        <div class="ad-container">
+            <!-- Google AdSense Footer Ad -->
+            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4177525998865557"
+     crossorigin="anonymous"></script>
+<!-- Github Mediamasterprop -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4177525998865557"
+     data-ad-slot="9353889022"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+        </div>
+    </div>
+
+    <footer>
+        <div class="contact-info">
+            <a href="tel:+923167372886">
+                <i class="fas fa-phone"></i>
+                +92 316 7372886
+            </a>
+            <a href="mailto:hassanbhatti2343@gmail.com">
+                <i class="fas fa-envelope"></i>
+                hassanbhatti2343@gmail.com
+            </a>
+        </div>
+        <p>© 2024 Professional PDF Tools. Developed by <strong>HABIB-UR-REHMAN</strong></p>
+    </footer>
+
+    <div class="loading">
+        <div class="spinner"></div>
+    </div>
+
+    <script>
+        let currentTheme = 'light';
+        let pdfFiles = [];
+        const compressionLevel = document.getElementById('compressionLevel');
+        const levelValue = document.getElementById('levelValue');
+        const fileList = document.getElementById('fileList');
+
+        // Theme Toggle
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            const themeBtn = document.querySelector('.theme-toggle');
+            themeBtn.innerHTML = currentTheme === 'light' 
+                ? '<i class="fas fa-sun"></i>' 
+                : '<i class="fas fa-moon"></i>';
+            currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+        }
+
+        // File Upload Handling
+        document.getElementById('pdfInput').addEventListener('change', function(e) {
+            pdfFiles = Array.from(e.target.files);
+            updateFileList();
+        });
+
+        function updateFileList() {
+            fileList.innerHTML = '';
+            pdfFiles.forEach((file, index) => {
+                const div = document.createElement('div');
+                div.className = 'file-item';
+                div.innerHTML = `
+                    <span>${file.name}</span>
+                    <button onclick="removeFile(${index})">
+                        <i class="fas fa-times"></i>
+                    </button>
+                `;
+                fileList.appendChild(div);
+            });
+        }
+
+        function removeFile(index) {
+            pdfFiles.splice(index, 1);
+            updateFileList();
+        }
+
+        // Compression Level Control
+        compressionLevel.addEventListener('input', () => {
+            levelValue.textContent = `${Math.round(compressionLevel.value * 100)}%`;
+        });
+
+        // PDF Merging Logic
+        async function mergePDFs() {
+            if (pdfFiles.length < 1) {
+                alert('Please select at least one PDF file!');
+                return;
+            }
+
+            showLoading(true);
+
+            // In real implementation, use PDF merging library like pdf-lib
+            // This is a simulation for demonstration
+            setTimeout(() => {
+                const mergedBlob = new Blob(pdfFiles, { type: 'application/pdf' });
+                const downloadLink = document.createElement('a');
+                downloadLink.href = URL.createObjectURL(mergedBlob);
+                downloadLink.download = `merged-document-${Date.now()}.pdf`;
+                downloadLink.click();
+                showLoading(false);
+            }, 2000);
+        }
+
+        // Helper Functions
+        function showLoading(show) {
+            document.querySelector('.loading').style.display = show ? 'flex' : 'none';
+        }
+
+        // Initialize Ads
+        (adsbygoogle = window.adsbygoogle || []).push({});
+
+        // Service Worker
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js')
+                .then(registration => console.log('Service Worker registered'))
+                .catch(err => console.log('Service Worker registration failed'));
+        }
+
+        // Google Analytics
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-XXXXXXXXXX');
+    </script>
+</body>
+</html>

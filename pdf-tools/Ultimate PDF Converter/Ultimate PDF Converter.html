@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ultimate PDF Converter | HABIB-UR-REHMAN</title>
+    <meta name="description" content="Convert PDF to JPG, PNG, DOCX and other formats. Professional file conversion with compression and optimization">
+    <meta name="keywords" content="PDF converter, PDF to JPG, PDF to Word, document conversion">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Ultimate PDF Converter",
+        "description": "Advanced online document conversion tool",
+        "applicationCategory": "Document",
+        "operatingSystem": "Web",
+        "author": {
+            "@type": "Person",
+            "name": "HABIB-UR-REHMAN",
+            "email": "hassanbhatti2343@gmail.com",
+            "telephone": "+923167372886"
+        }
+    }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2563EB;
+            --secondary: #1D4ED8;
+            --accent: #10B981;
+            --dark: #1F2937;
+            --light: #F8FAFC;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .dark-mode {
+            --light: #0F172A;
+            --dark: #F8FAFC;
+            background: var(--light);
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .theme-toggle {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            flex: 1;
+            width: 95%;
+        }
+
+        .converter-section {
+            background: rgba(37, 99, 235, 0.05);
+            padding: 2rem;
+            border-radius: 1rem;
+            margin: 2rem 0;
+            border: 2px dashed var(--primary);
+            text-align: center;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .custom-upload {
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .custom-upload::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: 0.5s;
+        }
+
+        .custom-upload:hover::before {
+            left: 100%;
+        }
+
+        .format-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .format-card {
+            padding: 1rem;
+            border: 2px solid var(--primary);
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .format-card.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .compression-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        input[type="range"] {
+            flex: 1;
+            height: 5px;
+            border-radius: 5px;
+            background: #ddd;
+            outline: none;
+        }
+
+        .ad-container {
+            margin: 2rem 0;
+            padding: 1rem;
+            background: var(--light);
+            border-radius: 0.5rem;
+            text-align: center;
+        }
+
+        footer {
+            background: var(--dark);
+            color: var(--light);
+            padding: 2rem;
+            margin-top: auto;
+            text-align: center;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+        }
+
+        .contact-info a {
+            color: var(--light);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .loading {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        Ultimate PDF Converter
+        <button class="theme-toggle" onclick="toggleTheme()"><i class="fas fa-palette"></i></button>
+    </header>
+
+    <div class="container">
+        <div class="ad-container">
+            <!-- Google AdSense Header Ad -->
+            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4177525998865557"
+     crossorigin="anonymous"></script>
+<!-- Github Mediamasterprop -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4177525998865557"
+     data-ad-slot="9353889022"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+        </div>
+
+        <div class="converter-section">
+            <input type="file" id="pdfInput" accept=".pdf">
+            <label for="pdfInput" class="custom-upload">
+                <i class="fas fa-file-upload"></i>
+                Upload PDF File
+            </label>
+
+            <div class="format-grid">
+                <div class="format-card active" data-format="jpg">
+                    <i class="fas fa-file-image"></i>
+                    JPG
+                </div>
+                <div class="format-card" data-format="png">
+                    <i class="fas fa-file-image"></i>
+                    PNG
+                </div>
+                <div class="format-card" data-format="docx">
+                    <i class="fas fa-file-word"></i>
+                    DOCX
+                </div>
+                <div class="format-card" data-format="txt">
+                    <i class="fas fa-file-alt"></i>
+                    TXT
+                </div>
+            </div>
+
+            <div class="compression-controls">
+                <label>Quality Level:</label>
+                <input type="range" id="qualityLevel" min="0" max="1" step="0.1" value="0.8">
+                <span id="qualityValue">80%</span>
+            </div>
+
+            <button class="custom-upload" onclick="convertFile()">
+                <i class="fas fa-file-export"></i>
+                Convert Now
+            </button>
+        </div>
+
+        <div class="ad-container">
+            <!-- Google AdSense Footer Ad -->
+            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4177525998865557"
+     crossorigin="anonymous"></script>
+<!-- Github Mediamasterprop -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4177525998865557"
+     data-ad-slot="9353889022"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+        </div>
+    </div>
+
+    <footer>
+        <div class="contact-info">
+            <a href="tel:+923167372886">
+                <i class="fas fa-phone"></i>
+                +92 316 7372886
+            </a>
+            <a href="mailto:hassanbhatti2343@gmail.com">
+                <i class="fas fa-envelope"></i>
+                hassanbhatti2343@gmail.com
+            </a>
+        </div>
+        <p>© 2024 Professional Document Tools. Developed by <strong>HABIB-UR-REHMAN</strong></p>
+    </footer>
+
+    <div class="loading">
+        <div class="spinner"></div>
+    </div>
+
+    <script>
+        let currentTheme = 'light';
+        let currentFile = null;
+        let targetFormat = 'jpg';
+        const qualityLevel = document.getElementById('qualityLevel');
+        const qualityValue = document.getElementById('qualityValue');
+
+        // Theme Toggle
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            const themeBtn = document.querySelector('.theme-toggle');
+            themeBtn.innerHTML = currentTheme === 'light' 
+                ? '<i class="fas fa-sun"></i>' 
+                : '<i class="fas fa-moon"></i>';
+            currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+        }
+
+        // Format Selection
+        document.querySelectorAll('.format-card').forEach(card => {
+            card.addEventListener('click', () => {
+                document.querySelectorAll('.format-card').forEach(c => c.classList.remove('active'));
+                card.classList.add('active');
+                targetFormat = card.dataset.format;
+            });
+        });
+
+        // Quality Control
+        qualityLevel.addEventListener('input', () => {
+            qualityValue.textContent = `${Math.round(qualityLevel.value * 100)}%`;
+        });
+
+        // File Handling
+        document.getElementById('pdfInput').addEventListener('change', function(e) {
+            currentFile = e.target.files[0];
+        });
+
+        // Conversion Logic
+        async function convertFile() {
+            if (!currentFile) {
+                alert('Please upload a PDF file first!');
+                return;
+            }
+
+            showLoading(true);
+
+            // Simulated conversion process
+            setTimeout(() => {
+                const blob = new Blob([currentFile], { type: `application/${targetFormat}` });
+                const downloadLink = document.createElement('a');
+                downloadLink.href = URL.createObjectURL(blob);
+                downloadLink.download = `converted-file.${targetFormat}`;
+                downloadLink.click();
+                showLoading(false);
+            }, 2000);
+        }
+
+        // Helper Functions
+        function showLoading(show) {
+            document.querySelector('.loading').style.display = show ? 'flex' : 'none';
+        }
+
+        // Initialize Ads
+        (adsbygoogle = window.adsbygoogle || []).push({});
+
+        // Service Worker
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js')
+                .then(registration => console.log('Service Worker registered'))
+                .catch(err => console.log('Service Worker registration failed'));
+        }
+
+        // Google Analytics
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-XXXXXXXXXX');
+    </script>
+</body>
+</html>

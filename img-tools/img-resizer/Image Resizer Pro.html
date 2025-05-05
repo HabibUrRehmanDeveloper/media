@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pro Image Resizer | HABIB-UR-REHMAN</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #6366f1;
+      --secondary: #4f46e5;
+      --dark: #1e293b;
+      --light: #f8fafc;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      transition: all 0.3s ease;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--light);
+      color: var(--dark);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .dark-mode {
+      --light: #0f172a;
+      --dark: #f8fafc;
+      background: var(--light);
+    }
+
+    header {
+      background: var(--primary);
+      color: white;
+      padding: 1.5rem;
+      text-align: center;
+      box-shadow: var(--shadow);
+      position: relative;
+    }
+
+    .theme-toggle {
+      position: absolute;
+      right: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: white;
+      cursor: pointer;
+      font-size: 1.2rem;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+      flex: 1;
+      width: 95%;
+    }
+
+    .upload-section {
+      background: white;
+      padding: 2rem;
+      border-radius: 1rem;
+      box-shadow: var(--shadow);
+      margin: 2rem 0;
+      border: 2px dashed var(--primary);
+      text-align: center;
+    }
+
+    .upload-section:hover {
+      transform: translateY(-3px);
+      border-color: var(--secondary);
+    }
+
+    .controls {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+
+    input[type="file"] {
+      display: none;
+    }
+
+    .custom-upload {
+      background: var(--primary);
+      color: white;
+      padding: 1rem 2rem;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: transform 0.2s;
+    }
+
+    .custom-upload:hover {
+      background: var(--secondary);
+      transform: scale(1.05);
+    }
+
+    .dimension-inputs {
+      display: flex;
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+
+    input[type="number"] {
+      padding: 0.8rem;
+      border: 2px solid #e2e8f0;
+      border-radius: 0.5rem;
+      width: 100%;
+      font-size: 1rem;
+    }
+
+    input[type="number"]:focus {
+      border-color: var(--primary);
+      outline: none;
+    }
+
+    .preview-container {
+      position: relative;
+      margin: 2rem 0;
+      border-radius: 1rem;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    #preview {
+      max-width: 100%;
+      display: none;
+    }
+
+    .quality-control {
+      margin: 1rem 0;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .download-btn {
+      background: linear-gradient(45deg, var(--primary), var(--secondary));
+      color: white;
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1.1rem;
+      transition: transform 0.2s;
+    }
+
+    .download-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+    }
+
+    footer {
+      background: var(--dark);
+      color: var(--light);
+      padding: 2rem;
+      margin-top: auto;
+      text-align: center;
+    }
+
+    .contact-info {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin: 1rem 0;
+      flex-wrap: wrap;
+    }
+
+    .contact-info a {
+      color: var(--light);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .contact-info a:hover {
+      color: var(--primary);
+    }
+
+    @media (max-width: 768px) {
+      .dimension-inputs {
+        flex-direction: column;
+      }
+      
+      .controls {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .loading {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .spinner {
+      width: 50px;
+      height: 50px;
+      border: 5px solid #f3f3f3;
+      border-top: 5px solid var(--primary);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    Pro Image Resizer
+    <button class="theme-toggle" onclick="toggleTheme()"><i class="fas fa-moon"></i></button>
+  </header>
+
+  <div class="container">
+    <div class="upload-section">
+      <input type="file" id="upload" accept="image/*">
+      <label for="upload" class="custom-upload">
+        <i class="fas fa-cloud-upload-alt"></i>
+        Choose Image
+      </label>
+      <div class="dimension-inputs">
+        <input type="number" id="width" placeholder="Width (px)" min="1">
+        <input type="number" id="height" placeholder="Height (px)" min="1">
+      </div>
+      <div class="quality-control">
+        <label>Quality:</label>
+        <input type="range" id="quality" min="0" max="1" step="0.1" value="0.8">
+        <span id="qualityValue">80%</span>
+      </div>
+      <button class="download-btn" onclick="processImage()">
+        <i class="fas fa-download"></i>
+        Download Resized Image
+      </button>
+      <div class="preview-container">
+        <img id="preview" alt="Preview">
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="contact-info">
+      <a href="tel:+923167372886">
+        <i class="fas fa-phone"></i>
+        +92 316 7372886
+      </a>
+      <a href="mailto:hassanbhatti2343@gmail.com">
+        <i class="fas fa-envelope"></i>
+        hassanbhatti2343@gmail.com
+      </a>
+    </div>
+    <p>© 2024 Image Resizer. Developed by HABIB-UR-REHMAN</p>
+  </footer>
+
+  <div class="loading">
+    <div class="spinner"></div>
+  </div>
+
+  <script>
+    let currentTheme = 'light';
+    const qualitySlider = document.getElementById('quality');
+    const qualityValue = document.getElementById('qualityValue');
+
+    qualitySlider.addEventListener('input', () => {
+      qualityValue.textContent = `${Math.round(qualitySlider.value * 100)}%`;
+    });
+
+    function toggleTheme() {
+      document.body.classList.toggle('dark-mode');
+      const themeBtn = document.querySelector('.theme-toggle');
+      themeBtn.innerHTML = currentTheme === 'light' 
+        ? '<i class="fas fa-sun"></i>' 
+        : '<i class="fas fa-moon"></i>';
+      currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+    }
+
+    document.getElementById('upload').addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const preview = document.getElementById('preview');
+        preview.src = e.target.result;
+        preview.style.display = 'block';
+      }
+      reader.readAsDataURL(file);
+    });
+
+    async function processImage() {
+      const file = document.getElementById('upload').files[0];
+      const width = parseInt(document.getElementById('width').value);
+      const height = parseInt(document.getElementById('height').value);
+      const quality = parseFloat(qualitySlider.value);
+
+      if (!file) {
+        showError('Please select an image first!');
+        return;
+      }
+
+      showLoading(true);
+
+      try {
+        const img = await loadImage(file);
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+
+        // Calculate dimensions while maintaining aspect ratio
+        let targetWidth = width || img.width;
+        let targetHeight = height || img.height;
+        
+        if (width && !height) {
+          targetHeight = (width / img.width) * img.height;
+        } else if (height && !width) {
+          targetWidth = (height / img.height) * img.width;
+        }
+
+        canvas.width = targetWidth;
+        canvas.height = targetHeight;
+        ctx.drawImage(img, 0, 0, targetWidth, targetHeight);
+
+        // Convert to Blob with specified quality
+        canvas.toBlob(blob => {
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = `resized-${file.name}`;
+          document.body.appendChild(a);
+          a.click();
+          URL.revokeObjectURL(url);
+          showLoading(false);
+        }, 'image/jpeg', quality);
+        
+      } catch (error) {
+        showError('Error processing image. Please try again.');
+        showLoading(false);
+      }
+    }
+
+    function loadImage(file) {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.onload = () => resolve(img);
+        img.onerror = reject;
+        img.src = URL.createObjectURL(file);
+      });
+    }
+
+    function showLoading(show) {
+      document.querySelector('.loading').style.display = show ? 'flex' : 'none';
+    }
+
+    function showError(message) {
+      alert(message); // Replace with toast notification in production
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediaMaster Pro - Ultimate Digital Optimization Suite</title>
+    <meta name="description" content="Professional-grade tools for image optimization, PDF management, and file conversion with AI-powered enhancements">
+    
+    <!-- SEO Optimization -->
+    <meta name="keywords" content="image compressor, PDF tools, video converter, document optimization">
+    <link rel="canonical" href="https://mediamasterpro.com">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "MediaMaster Pro",
+        "applicationCategory": "Multimedia",
+        "operatingSystem": "Web",
+        "offers": {
+            "@type": "Offer",
+            "price": "0.00",
+            "priceCurrency": "USD"
+        }
+    }
+    </script>
+
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #1e40af;
+            --accent: #f59e0b;
+            --dark: #1f2937;
+            --light: #f8fafc;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: var(--light);
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            padding: 1rem 5%;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            transition: transform 0.3s ease;
+        }
+
+        /* Homepage */
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8rem 5% 4rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+        }
+
+        .tool-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .tool-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1));
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+
+        .tool-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        }
+
+        .tool-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            transition: transform 0.3s ease;
+        }
+
+        /* Tool Pages */
+        .tool-section {
+            display: none;
+            padding: 8rem 5% 4rem;
+            min-height: 100vh;
+        }
+
+        .upload-area {
+            border: 3px dashed var(--primary);
+            border-radius: 15px;
+            padding: 3rem;
+            text-align: center;
+            margin: 2rem 0;
+            transition: all 0.3s ease;
+            background: rgba(255,255,255,0.9);
+        }
+
+        .preview-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin: 3rem 0;
+        }
+
+        /* Ads */
+        .ad-unit {
+            margin: 2rem auto;
+            padding: 1rem;
+            background: white;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        @media (max-width: 768px) {
+            .tool-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .preview-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="#home" class="logo">MediaMaster Pro</a>
+    </nav>
+
+    <!-- Homepage -->
+    <section id="home" class="hero-section">
+        <div class="tool-grid">
+           <div class="tool-card" onclick="showTool('image')"> 
+    <a href="img-tools/Image Tools.html" style="color: black;">
+        <i class="fas fa-image tool-icon"></i>
+        <h2>Image Tools</h2>
+        <p>Compress, Convert & Enhance Images</p>
+    </a>
+</div>
+
+
+            <a href="pdf-tools/pdf%20tools.html" style="color: black; text-decoration: none;">
+  <div class="tool-card">
+    <i class="fas fa-file-pdf tool-icon"></i>
+    <h2>PDF Tools</h2>
+    <p>Compress, Merge & Convert PDFs</p>
+  </div>
+</a>
+
+          <a href="video-tools/video%20tools.html" style="color: black; text-decoration: none;">
+  <div class="tool-card">
+    <i class="fas fa-video tool-icon"></i>
+    <h2>Video Tools</h2>
+    <p>Convert & Optimize Videos</p>
+  </div>
+</a>
+
+        </div>
+    </section>
+
+    <!-- Image Tools Section -->
+    <section id="image-tools" class="tool-section">
+        <div class="ad-unit">
+            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4177525998865557"
+     crossorigin="anonymous"></script>
+<!-- Github Mediamasterprop -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4177525998865557"
+     data-ad-slot="9353889022"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+        </div>
+
+        <button class="back-btn" onclick="showHome()"><i class="fas fa-arrow-left"></i> Back to Tools</button>
+        
+        <div class="upload-area" ondragover="handleDragOver(event)" ondrop="handleDrop(event)">
+            <input type="file" id="imageInput" hidden accept="image/*">
+            <i class="fas fa-cloud-upload-alt fa-3x"></i>
+            <h3>Drag & Drop Images</h3>
+            <p>or click to browse files (Max 25MB)</p>
+        </div>
+
+        <div class="controls">
+            <div class="control-group">
+                <label>Compression Quality: <span id="qualityValue">80%</span></label>
+                <input type="range" id="compressionLevel" min="1" max="100" value="80">
+            </div>
+
+            <div class="control-group">
+                <label>Output Format</label>
+                <select id="outputFormat">
+                    <option value="webp">WebP</option>
+                    <option value="jpeg">JPEG</option>
+                    <option value="png">PNG</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="preview-container">
+            <div class="original-preview">
+                <h4>Original Image</h4>
+                <div id="originalPreview"></div>
+            </div>
+            <div class="compressed-preview">
+                <h4>Optimized Image</h4>
+                <div id="compressedPreview"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Additional Tool Sections -->
+
+    <script>
+        // Navigation
+        function showTool(tool) {
+            document.getElementById('home').style.display = 'none';
+            document.getElementById(`${tool}-tools`).style.display = 'block';
+            window.scrollTo(0, 0);
+        }
+
+        function showHome() {
+            document.querySelectorAll('.tool-section').forEach(section => {
+                section.style.display = 'none';
+            });
+            document.getElementById('home').style.display = 'block';
+            window.scrollTo(0, 0);
+        }
+
+        // Image Processing
+        let currentFile = null;
+        const imageInput = document.getElementById('imageInput');
+
+        // File Handling
+        imageInput.addEventListener('change', handleFileSelect);
+        document.querySelector('.upload-area').addEventListener('click', () => imageInput.click());
+
+        function handleDragOver(e) {
+            e.preventDefault();
+            e.target.style.borderColor = var(--accent);
+        }
+
+        async function handleDrop(e) {
+            e.preventDefault();
+            const file = e.dataTransfer.files[0];
+            if (file) processImage(file);
+        }
+
+        async function handleFileSelect() {
+            const file = imageInput.files[0];
+            if (!file) return;
+            processImage(file);
+        }
+
+        async function processImage(file) {
+            currentFile = file;
+            const reader = new FileReader();
+            
+            reader.onload = (e) => {
+                const img = new Image();
+                img.src = e.target.result;
+                
+                img.onload = () => {
+                    document.getElementById('originalPreview').innerHTML = `
+                        <img src="${img.src}" class="preview-image">
+                        <p>${(file.size/1024).toFixed(1)}KB • ${img.width}x${img.height}px</p>
+                    `;
+                }
+            }
+            reader.readAsDataURL(file);
+        }
+
+        // Compression Engine
+        async function compressImage() {
+            const quality = document.getElementById('compressionLevel').value / 100;
+            const format = document.getElementById('outputFormat').value;
+            
+            const img = await createImageBitmap(currentFile);
+            const canvas = new OffscreenCanvas(img.width, img.height);
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0);
+
+            const blob = await canvas.convertToBlob({
+                type: `image/${format}`,
+                quality: quality
+            });
+
+            const url = URL.createObjectURL(blob);
+            document.getElementById('compressedPreview').innerHTML = `
+                <img src="${url}" class="preview-image">
+                <p>${(blob.size/1024).toFixed(1)}KB • ${Math.round(quality*100)}% Quality</p>
+                <a href="${url}" download="optimized.${format}" class="download-btn">
+                    <i class="fas fa-download"></i> Download
+                </a>
+            `;
+        }
+
+        // Initialize AdSense
+        (adsbygoogle = window.adsbygoogle || []).push({});
+
+        // Event Listeners
+        document.getElementById('compressionLevel').addEventListener('input', function() {
+            document.getElementById('qualityValue').textContent = `${this.value}%`;
+        });
+    </script>
+</body>
+</html>
